@@ -1,6 +1,7 @@
 
 from blackjack import play_blackjack
 from tictactoe import play_tictactoe
+from hangman import play_hangman
 
 # Defines custom exception class which handles any table not found errors.
 class ExitNotFoundError(Exception):
@@ -45,7 +46,7 @@ class Table():
     def __str__(self):
         return f"{self.name}: {self.description}\n\nExits:\n{self.list_exits()}"
 
-# Defines the AdventureMap class which manages the map of tables.
+# Defines the GameRoomMap class which manages the map of tables.
 class GameRoomMap():
 
     # Contructor with no paramenters.
@@ -73,7 +74,7 @@ def main():
     # Initializes AdventureMap instance.
     game_room_map = GameRoomMap()
 
-    # Adds all tables in the house to the adventure map.
+    # Adds all tables in the house to the game room map.
     game_room_map.add_table(Table("Blackjack", "", ["Tic Tac Toe"]))
     game_room_map.add_table(Table("Tic Tac Toe", "", ["Blackjack", "Hangman"]))
     game_room_map.add_table(Table("Hangman", "", ["Tic Tac Toe", "Rock Paper Scissors"]))
@@ -130,8 +131,8 @@ def main():
                     play_blackjack()
                 elif user_exit.title() == "Tic Tac Toe":
                     play_tictactoe()
-
                 elif user_exit.title() == "Hangman":
+                    play_hangman()
                 elif user_exit.title() == "Rock Paper Scissors":
                 elif user_exit.title() == "Number Guesser":
                 elif user_exit.title() == "Magic Squares":

@@ -114,14 +114,14 @@ categories = {
         'Houston', 'Texas', 'Philadelphia', 'Pennsylvania', 'Phoenix', 'Arizona', 'San Antonio', 
         'San Diego', 'Dallas', 'San Jose', 'Austin', 'Texas', 'Jacksonville', 'Florida', 
         'San Francisco', 'Indianapolis', 'Indiana', 'Massachusetts', 'Mississippi'],
-    'movies': ["The Godfather", "The Shawshank Redemption", "Schindler's List",
+    'movies': ["The Godfather", "The Shawshank Redemption",
         "Raging Bull", "Casablanca", "Citizen Kane", "Gone With The Wind", "The Wizard Of Oz",
         "Inception"],
     "ta": ["Richard", "John", "Mars", "Aaron", "Brendan", "Jada", "Braylon"]
 }
 
 # Main program function.
-def main():
+def play_hangman():
 
     print("Please enter a seed: ") # Player is asked to input a seed.
 
@@ -208,7 +208,3 @@ def main():
         print("Better luck next time.")
         print_gallows(num_wrong_guesses)
         print_word(word, displayed_word, guess)
-
-# Runs main.
-if __name__ == "__main__":
-    main()
