@@ -122,89 +122,90 @@ categories = {
 
 # Main program function.
 def play_hangman():
-
-    print("Please enter a seed: ") # Player is asked to input a seed.
-
-    user_seed = int(input()) # user_seed is set to the user's input.
-    random.seed(user_seed) # Random seed is set to players chosen seed.
-
-    # Welcomes player to hangman and tells them what to do.
-    print("Let's play Hangman!")
-    print("You are going to be given some empty dashes and you will guess the word in question by typing one letter at a time.")
-    print("Well... that is before you are hanged!\n")
-    
-    cat = random.choice(list(categories.keys())) # Chooses a random catagory from catagories, assigned to cat.
-    
-    print(f"The category is: {cat}\n") # Player is told their catagory.
-
-    word = choose_word(cat) # choose_word function run with chosen catagory, word assigned with word(s).
-    displayed_word = [] # Initializes empty list displayed_word.
-
-    # For loop iterates len(word) times and appends an "_" to displayed_word for each letter in word and a " " for each space.
-    for i in range(len(word)):
-
-        if word[i].isalpha():
-            displayed_word.append('_')
-        else:
-            displayed_word.append(' ')
-
-    
-    num_wrong_guesses = 0 # Initializes num_wrong_guesses variable.
-    guesses = [] # Initializes empty list guesses.
-
-    print_gallows(num_wrong_guesses) # print_gallows function ran with num_wrong_guesses = 0.
-    print_word(word, displayed_word) # print_word function ran with word and displayed_word as inputs.
-
-    playing = True # Initializes playing boolean to True.
-
-    # While loop iterates until playing = False.
-    while playing:
-
-        print("Guess a letter: ") # User is asked to guess a letter.
-        guess = input().strip().lower() # Users guess is stripped and turned all lowercase, assigned to guess variable.
-
-        # While loop iterates until user inputs a single letter that has not already been guessed, guess assigned as above.
-        while (len(guess) != 1) or (guess in guesses):
-            if (len(guess) != 1):
-                print("Please enter in just a singular letter")
-                guess = input().strip().lower()
-            else:
-                print("You have already guessed that letter!")
-                guess = input().strip().lower()
-
-        guesses.append(guess) # Adds user's guess to list of guesses.
+    while True:
+        cat = random.choice(list(categories.keys())) # Chooses a random catagory from catagories, assigned to cat.
         
-        # If the user's guess is in word, the user is informed they are correct and the gallows and word(s) are printed with updated parameters.
-        if guess.lower() in word.lower():
-            print("Correct!")
-            print_gallows(num_wrong_guesses)
-            print_word(word, displayed_word, guess)
-        # Else, the user is informed that their guess is not in the word, num_wrong_guesses incremented.
-        else:
-            print(f"There are no {guess}'s")
-            num_wrong_guesses += 1
-            # If num_wrong_guesses is under 6, the game continues and the gallows and word(s) are printed with updated parameters.
-            if num_wrong_guesses < 6:
+        print(f"\nThe category is: {cat}\n") # Player is told their catagory.
+
+        word = choose_word(cat) # choose_word function run with chosen catagory, word assigned with word(s).
+        displayed_word = [] # Initializes empty list displayed_word.
+
+        # For loop iterates len(word) times and appends an "_" to displayed_word for each letter in word and a " " for each space.
+        for i in range(len(word)):
+
+            if word[i].isalpha():
+                displayed_word.append('_')
+            else:
+                displayed_word.append(' ')
+
+        
+        num_wrong_guesses = 0 # Initializes num_wrong_guesses variable.
+        guesses = [] # Initializes empty list guesses.
+
+        print_gallows(num_wrong_guesses) # print_gallows function ran with num_wrong_guesses = 0.
+        print_word(word, displayed_word) # print_word function ran with word and displayed_word as inputs.
+
+        playing = True # Initializes playing boolean to True.
+
+        # While loop iterates until playing = False.
+        while playing:
+
+            print("Guess a letter: ") # User is asked to guess a letter.
+            guess = input().strip().lower() # Users guess is stripped and turned all lowercase, assigned to guess variable.
+
+            # While loop iterates until user inputs a single letter that has not already been guessed, guess assigned as above.
+            while (len(guess) != 1) or (guess in guesses):
+                if (len(guess) != 1):
+                    print("Please enter in just a singular letter")
+                    guess = input().strip().lower()
+                else:
+                    print("You have already guessed that letter!")
+                    guess = input().strip().lower()
+
+            guesses.append(guess) # Adds user's guess to list of guesses.
+            
+            # If the user's guess is in word, the user is informed they are correct and the gallows and word(s) are printed with updated parameters.
+            if guess.lower() in word.lower():
+                print("Correct!")
                 print_gallows(num_wrong_guesses)
                 print_word(word, displayed_word, guess)
+            # Else, the user is informed that their guess is not in the word, num_wrong_guesses incremented.
+            else:
+                print(f"There are no {guess}'s")
+                num_wrong_guesses += 1
+                # If num_wrong_guesses is under 6, the game continues and the gallows and word(s) are printed with updated parameters.
+                if num_wrong_guesses < 6:
+                    print_gallows(num_wrong_guesses)
+                    print_word(word, displayed_word, guess)
 
-        # If the user guesses all of the letter in the word(s) the playing boolean is set to False, stopping the loop, and winner boolean is set to True.
-        if '_' not in displayed_word:
-            playing = False
-            winner = True
+            # If the user guesses all of the letter in the word(s) the playing boolean is set to False, stopping the loop, and winner boolean is set to True.
+            if '_' not in displayed_word:
+                playing = False
+                winner = True
 
-        # If num_wrong_guesses is 6, the user used all their guesses, playing and winner booleans are set to False.
-        if num_wrong_guesses == 6:
-            playing = False
-            winner = False
-    
-    # If winner is true, user is informed that they won.
-    if winner:
-        print("You have won!")
-    # Else: the winner is informed that they lost, they are told the word, the gallows with full man is printed, and the displayed word is printed.
-    else:
-        print("Gave Over, you are HANGED!")
-        print(f"The word was: {word}")
-        print("Better luck next time.")
-        print_gallows(num_wrong_guesses)
-        print_word(word, displayed_word, guess)
+            # If num_wrong_guesses is 6, the user used all their guesses, playing and winner booleans are set to False.
+            if num_wrong_guesses == 6:
+                playing = False
+                winner = False
+        
+        # If winner is true, user is informed that they won.
+        if winner:
+            print("You have won!")
+        # Else: the winner is informed that they lost, they are told the word, the gallows with full man is printed, and the displayed word is printed.
+        else:
+            print("Gave Over, you are HANGED!")
+            print(f"The word was: {word}")
+            print("Better luck next time.")
+            print_gallows(num_wrong_guesses)
+            print_word(word, displayed_word, guess)
+        
+            print("Would you like to play again? Enter yes or no")
+            play_again = input().lower()
+
+            while play_again not in ['yes', 'no']:
+                print("Invalid Choice. Enter yes or no")
+                play_again = input().lower()
+
+            if play_again == 'no':
+                print("Thanks for playing!")
+                break
