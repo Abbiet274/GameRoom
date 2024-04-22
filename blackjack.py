@@ -76,8 +76,6 @@ def hit(deck: list, hand: list) -> None:
 
 def play_blackjack() -> None: 
 
-    print("Welcome to the Blackjack table!")
-
     # List of the deck of cards.
     deck = [
         "AH", "2H", "3H", "4H", "5H", "6H", "7H", "8H", "9H", "10H", "JH", "QH", "KH",
