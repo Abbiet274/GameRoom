@@ -1,4 +1,5 @@
 
+import json
 import random
 from blackjack import play_blackjack
 from tictactoe import play_tictactoe
@@ -119,7 +120,13 @@ def main():
     game_room_map.add_table(magic_table)
     game_room_map.add_table(wordj_table)
 
-    times_played = {"Blackjack": 0, "Tic Tac Toe": 0, "Hangman": 0, "Rock Paper Scissors": 0, "Number Guesser": 0, "Magic Squares": 0, "Word Jumble": 0}
+    try:
+        with open("timesplayed.json", "r") as file:
+            times_played = json.load(file)
+        print(times_played)
+    except FileNotFoundError:
+        print('file reset')
+        times_played = {"Blackjack": 0, "Tic Tac Toe": 0, "Hangman": 0, "Rock Paper Scissors": 0, "Number Guesser": 0, "Magic Squares": 0, "Word Jumble": 0}
 
     # Welcomes user to Game Room.
     print("\nWelcome to the Game Room! You are currently at the blackjack table. To leave the Game Room, please type 'exit,' instead of your next game.\n")
@@ -131,7 +138,7 @@ def main():
 
     # Displays the details of the current table.
     print(current_table)
-    times_played["Blackjack"] = play_blackjack()
+    times_played["Blackjack"] += play_blackjack()
     print(f"\nReachable Tables:\n{blackjack_table.list_exits()}")
 
     # Initialies exiting bool to False.
@@ -211,9 +218,11 @@ def main():
 
             # Informs the user that the table was not found.
             print(f"{user_exit} -> Table not found")
-        
-    print(times_played)
 
+    with open("timesplayed.json", "w") as file:
+        json.dump(times_played, file, indent=4)
+        print("Game session data saved.")
+        
 # Runs main program function.                
 if __name__ == "__main__":
     main()
