@@ -81,7 +81,6 @@ def play_tictactoe():
     while True:
 
         # Introduces the player and provides an example of the game input.
-        print("Let's play Tic-Tac-Toe!")
         print("When prompted, enter desired row and column numbers")
         print("""Example: 1 3
 
@@ -89,8 +88,6 @@ def play_tictactoe():
 | _ | _ | _ |
 | _ | _ | _ |
         """)
-
-        print("Let's play!")
 
         board = [['','',''],['','',''],['','','']] # Initializes empty game board
         players = ['X', 'O'] # Initializes list of player symbols X and O.

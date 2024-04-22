@@ -1,4 +1,5 @@
 
+import random
 from blackjack import play_blackjack
 from tictactoe import play_tictactoe
 from hangman import play_hangman
@@ -6,6 +7,29 @@ from magicsquares import play_magic_squares
 from rockpaperscissors import play_rps
 from numberguesser import play_number_guesser
 from wordjumble import play_word_jumble
+
+
+def print_map():
+    print("""
+        Game Room Map:
+ _______   _______   _______
+|       | |       | |Number |
+|Hangman| |R.P.S. | |Guesser|
+|_______| |_______| |_______|
+ _______             _______   
+|  Tic  |           | Magic | 
+|Tac Toe|           |Squares| 
+|_______|           |_______| 
+ _______             _______  
+| Black |           | Word  |
+| Jack  |           |Jumble | 
+|_______|           |_______| 
+    o
+   /|\\ <- You are here!
+   / \\ 
+
+""")
+
 
 # Defines custom exception class which handles any table not found errors.
 class ExitNotFoundError(Exception):
@@ -48,7 +72,7 @@ class Table():
     
     # __str__ method returns a string containg the name, rules, and exits of the table.
     def __str__(self):
-        return f"You've reached the {self.name} table!\n\nRules:\n{self.rules}\n"
+        return f"{self.name} Master: Hey! You've reached the {self.name} table! Here are some rules...\n\n{self.rules}\n"
 
 # Defines the GameRoomMap class which manages the map of tables.
 class GameRoomMap():
@@ -98,6 +122,8 @@ def main():
     # Welcomes user to Game Room.
     print("\nWelcome to the Game Room! You are currently at the blackjack table. To leave the Game Room, please type 'exit,' instead of your next game.\n")
 
+    print_map()
+
     # Initializes the current table (blackjack) and gets it from the game_room_map.
     current_table = game_room_map.get_table("Blackjack")
 
@@ -113,7 +139,7 @@ def main():
     while not exiting:
 
         # Prompts user for exit choice.
-        print("\nPlease choose your next game!")
+        print(f"\n{current_table.get_name()} Master: What table would you like to choose next? \n(Enter 'exit' if you would like to leave.)")
 
         # Sets users exit choice to user_exit, makes lowercase and strips leading trailing whitespace.
         user_exit = input().lower().strip()
@@ -125,7 +151,7 @@ def main():
         if user_exit == "exit":
             
             # Informs user that they are exiting the house.
-            print("Exiting the Game Room... thanks for playing!")
+            print(f"{current_table.get_name()} Master: All right! I will show you to the exit... thanks for playing!")
 
             # Sets exiting bool to True.
             exiting = True
@@ -141,10 +167,11 @@ def main():
                 # Outputs the details of the new current table.
                 print(f"\n{current_table}")
 
-                print("Would you like to stay at this table or jump to a new table without playing? Input stay or jump.")
+                print(f"{current_table.get_name()} Master: Would you like to stay at this table? Or would you like to jump to a new table without playing?")
                 answer = input().lower().strip()
                 while answer not in ['stay', 'jump']:
-                    print("Invalid choice. Input stay or jump.")
+                    responses = ["Sorry, I'm not quite sure what you wanna do... A simple 'stay' or 'jump' will do!", "What was that? I didn't quite hear you.", "Answer with either 'stay' or 'jump!'"]
+                    print(f"{current_table.get_name()} Master: {random.choice(responses)}")
                     answer = input().lower().strip()
 
                 if answer == "jump":
