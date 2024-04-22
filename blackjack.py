@@ -75,7 +75,9 @@ def hit(deck: list, hand: list) -> None:
 # Defines main function for the main program logic.
 
 def play_blackjack() -> None: 
+    times_played = 0
     while True:
+        times_played += 1
         # List of the deck of cards.
         deck = [
             "AH", "2H", "3H", "4H", "5H", "6H", "7H", "8H", "9H", "10H", "JH", "QH", "KH",
@@ -168,3 +170,6 @@ def play_blackjack() -> None:
         if play_again == 'no':
             print("Thanks for playing!")
             break
+        
+    return times_played
+    

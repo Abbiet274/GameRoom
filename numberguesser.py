@@ -42,9 +42,13 @@ def play_number_guesser():
 
     print("I'm thinking of a number between 1 and 100.")
 
+    times_played = 0
     while True:
+        times_played += 1
         attempts = game()
 
         if play_again() == 'no':
             print("Thanks for playing!")
             break
+    
+    return times_played

@@ -1,6 +1,8 @@
 
 def play_magic_squares():
+    times_played = 0
     while True:
+        times_played += 1
         print('Enter in the magic square size you would like:')
         size = int(input()) #Turns users number to an integer and stores it in variable size.
 
@@ -141,3 +143,5 @@ def play_magic_squares():
         if play_again == 'no':
             print("Thanks for playing!")
             break
+        
+    return times_played

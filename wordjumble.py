@@ -27,7 +27,9 @@ def jumble_word(word):
     return jumbled_word
 
 def play_word_jumble():
+    times_played = 0
     while True:
+        times_played += 1
         """Main function to play the word unjumble game."""
         category, secret_word = choose_word()
         jumbled_secret = jumble_word(secret_word)
@@ -51,3 +53,5 @@ def play_word_jumble():
         if play_again == 'no':
             print("Thanks for playing!")
             break
+        
+    return times_played

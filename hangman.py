@@ -122,7 +122,10 @@ categories = {
 
 # Main program function.
 def play_hangman():
+    times_played = 0
     while True:
+        times_played += 1
+
         cat = random.choice(list(categories.keys())) # Chooses a random catagory from catagories, assigned to cat.
         
         print(f"\nThe category is: {cat}\n") # Player is told their catagory.
@@ -147,9 +150,9 @@ def play_hangman():
 
         playing = True # Initializes playing boolean to True.
 
+
         # While loop iterates until playing = False.
         while playing:
-
             print("Guess a letter: ") # User is asked to guess a letter.
             guess = input().strip().lower() # Users guess is stripped and turned all lowercase, assigned to guess variable.
 
@@ -199,13 +202,15 @@ def play_hangman():
             print_gallows(num_wrong_guesses)
             print_word(word, displayed_word, guess)
         
-            print("Would you like to play again? Enter yes or no")
+        print("Would you like to play again? Enter yes or no")
+        play_again = input().lower()
+
+        while play_again not in ['yes', 'no']:
+            print("Invalid Choice. Enter yes or no")
             play_again = input().lower()
 
-            while play_again not in ['yes', 'no']:
-                print("Invalid Choice. Enter yes or no")
-                play_again = input().lower()
+        if play_again == 'no':
+            print("Thanks for playing!")
+            break
 
-            if play_again == 'no':
-                print("Thanks for playing!")
-                break
+    return times_played

@@ -77,8 +77,10 @@ def input_row_col() -> tuple:
 # Main program function.
 def play_tictactoe():
 
+    times_played = 0
     # While loop iterates until the player does not want to play anymore.
     while True:
+        times_played += 1
 
         # Introduces the player and provides an example of the game input.
         print("When prompted, enter desired row and column numbers")
@@ -98,8 +100,8 @@ def play_tictactoe():
         print_board(board) # Prints the initial empty board.
 
         # While loop iterates until a player wins or there is a tie.
+        times_played = 0
         while True:
-
             player = players[current_player] # Sets the current player.
             print(f"Enter row and column for player {player}")
             row, col = input_row_col() # Sets each value in the tuple returned by input_row_col to the variables row and col.
@@ -140,3 +142,5 @@ def play_tictactoe():
         # If they do not want to play again, the infinite loop is broken.
         if again == 'n':
             break
+
+    return times_played

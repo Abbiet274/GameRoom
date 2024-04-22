@@ -119,6 +119,8 @@ def main():
     game_room_map.add_table(magic_table)
     game_room_map.add_table(wordj_table)
 
+    times_played = {"Blackjack": 0, "Tic Tac Toe": 0, "Hangman": 0, "Rock Paper Scissors": 0, "Number Guesser": 0, "Magic Squares": 0, "Word Jumble": 0}
+
     # Welcomes user to Game Room.
     print("\nWelcome to the Game Room! You are currently at the blackjack table. To leave the Game Room, please type 'exit,' instead of your next game.\n")
 
@@ -129,7 +131,7 @@ def main():
 
     # Displays the details of the current table.
     print(current_table)
-    play_blackjack()
+    times_played["Blackjack"] = play_blackjack()
     print(f"\nReachable Tables:\n{blackjack_table.list_exits()}")
 
     # Initialies exiting bool to False.
@@ -178,22 +180,26 @@ def main():
                     print(f"\nReachable Tables:\n{current_table.list_exits()}")
                     continue
 
+                times = 0
+
                 if user_exit.title() == "Blackjack":
-                    play_blackjack()
+                    times = play_blackjack()
                 elif user_exit.title() == "Tic Tac Toe":
-                    play_tictactoe()
+                    times = play_tictactoe()
                 elif user_exit.title() == "Hangman":
-                    play_hangman()
+                    times = play_hangman()
                 elif user_exit.title() == "Rock Paper Scissors":
-                    play_rps()
+                    times = play_rps()
                 elif user_exit.title() == "Number Guesser":
-                    play_number_guesser()
+                    times = play_number_guesser()
                 elif user_exit.title() == "Magic Squares":
-                    play_magic_squares()
+                    times = play_magic_squares()
                 elif user_exit.title() == "Word Jumble":
-                    play_word_jumble()
+                    times = play_word_jumble()
 
                 print(f"\nReachable Tables:\n{current_table.list_exits()}")
+                current_times = times_played[current_table.get_name()]
+                times_played[current_table.get_name()] = current_times + times
 
             except ExitNotFoundError as e:
                 
@@ -205,6 +211,8 @@ def main():
 
             # Informs the user that the table was not found.
             print(f"{user_exit} -> Table not found")
+        
+    print(times_played)
 
 # Runs main program function.                
 if __name__ == "__main__":

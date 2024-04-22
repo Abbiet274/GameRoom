@@ -16,7 +16,9 @@ def determine_winner(player1_choice, player2_choice):
         return "Player 2 wins!"
 
 def play_rps():
+    times_played = 0
     while True:
+        times_played += 1
         player1_choice = get_player_choice(1)
         player2_choice = get_player_choice(2)
         print(determine_winner(player1_choice, player2_choice))
@@ -28,3 +30,4 @@ def play_rps():
         if play_again == 'no':
             print("Thanks for playing!")
             break
+    return times_played
