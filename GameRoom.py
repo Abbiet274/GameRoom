@@ -9,7 +9,6 @@ from rockpaperscissors import play_rps
 from numberguesser import play_number_guesser
 from wordjumble import play_word_jumble
 
-
 def print_map():
     print("""
         Game Room Map:
@@ -31,7 +30,6 @@ def print_map():
 
 """)
 
-
 # Defines custom exception class which handles any table not found errors.
 class ExitNotFoundError(Exception):
 
@@ -45,7 +43,7 @@ class ExitNotFoundError(Exception):
     def __str__(self):
         return f"{self.table_name} -> {self.message}"
 
-# Defines Table class which will be used to represent tables within the adventure map.
+# Defines Table class which will be used to represent tables within the game room map.
 class Table():
 
     # Constructor with parameters name, rules, and exits.
@@ -123,7 +121,6 @@ def main():
     try:
         with open("timesplayed.json", "r") as file:
             times_played = json.load(file)
-        print(times_played)
     except FileNotFoundError:
         print('file reset')
         times_played = {"Blackjack": 0, "Tic Tac Toe": 0, "Hangman": 0, "Rock Paper Scissors": 0, "Number Guesser": 0, "Magic Squares": 0, "Word Jumble": 0}
@@ -204,10 +201,11 @@ def main():
                 elif user_exit.title() == "Word Jumble":
                     times = play_word_jumble()
 
-                print(f"\nReachable Tables:\n{current_table.list_exits()}")
                 current_times = times_played[current_table.get_name()]
                 times_played[current_table.get_name()] = current_times + times
 
+                print(f"\nReachable Tables:\n{current_table.list_exits()}")
+                
             except ExitNotFoundError as e:
                 
                 # Handles table not found error using ExitNotFoundError class.
@@ -221,8 +219,14 @@ def main():
 
     with open("timesplayed.json", "w") as file:
         json.dump(times_played, file, indent=4)
-        print("Game session data saved.")
-        
+        print("Game session data saved.\nBelow is the total number of times each game has been played:")
+
+    with open("timesplayed.json", "r") as file:
+        all_data = json.load(file) 
+
+    for name, count in all_data.items():
+        print(f"   {name}: {count}")
+
 # Runs main program function.                
 if __name__ == "__main__":
     main()

@@ -83,7 +83,7 @@ def play_tictactoe():
         times_played += 1
 
         # Introduces the player and provides an example of the game input.
-        print("When prompted, enter desired row and column numbers")
+        print("\nWhen prompted, enter desired row and column numbers")
         print("""Example: 1 3
 
 | _ | _ | X |
@@ -100,7 +100,6 @@ def play_tictactoe():
         print_board(board) # Prints the initial empty board.
 
         # While loop iterates until a player wins or there is a tie.
-        times_played = 0
         while True:
             player = players[current_player] # Sets the current player.
             print(f"Enter row and column for player {player}")
@@ -136,7 +135,6 @@ def play_tictactoe():
         # While loop iterates until the user enters 'y' or 'n.'
         while again != 'y' and again != 'n':
             print("Please enter valid input: Y or N")
-            print("Do you want to play again? Y or N")
             again = input().strip().lower()
 
         # If they do not want to play again, the infinite loop is broken.

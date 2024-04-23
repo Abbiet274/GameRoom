@@ -102,7 +102,7 @@ def play_blackjack() -> None:
         for i in range(num_players):
             print(f"Player {i + 1}'s cards:")
             all_hands.append(deal(deck))
-            print(all_hands[i])
+            print('|'.join(all_hands[i]))
             print(f"Acknowledge that you have seen your cards player {i + 1} by entering any key.")
             acknowledge = input()
         
@@ -112,7 +112,7 @@ def play_blackjack() -> None:
 
         for i in range(num_players): # For loop iterates num_players times. Each loop represents each player's turn.
             print(f"Player {i + 1}'s cards:")
-            print(all_hands[i]) # Outputs the player's hand
+            print('|'.join(all_hands[i])) # Outputs the player's hand
             points = 0 # Initializes points variable.
             while True: # Infinite while loop that is only broken when a player sticks or busts.
                 print(f"Player {i + 1} would you like to hit or stick?") # Player is asked if they would like to hit or stick.
@@ -123,7 +123,7 @@ def play_blackjack() -> None:
                 if move == "hit": # If statement runs if the player hits.
                     hit(deck, all_hands[i]) # Hit function adds card to players deck
                     print(f"Player {i + 1}'s cards: ")
-                    print(all_hands[i]) # Outputs player's new hand.
+                    print('|'.join(all_hands[i])) # Outputs player's new hand.
                     points = get_sum(all_hands[i]) # Assigns points variable with the sum of the player's hand
                     if points > 21: # If statement runs if the player's points are greater than 21.
                         print(f"Player {i + 1} you have busted. Enter any key to acknowledge this.") # Player is notified that they busted, asked to acknowledge.
@@ -147,7 +147,19 @@ def play_blackjack() -> None:
 
         if all_busted: # If all_busted is True, 'Nobody won.' is output and the program is exited.
             print("Nobody won.")
-            exit()
+
+            print("Would you like to play again? Enter yes or no")
+            play_again = input().lower()
+
+            while play_again not in ['yes', 'no']:
+                print("Invalid Choice. Enter yes or no")
+                play_again = input().lower()
+
+            if play_again == 'no':
+                print("Thanks for playing!")
+                break
+            else:
+                continue
 
         high_score = max(all_points) # The high_score variable is set to the maximum value of the all_points list.
         winners = [] # Empty winners list is initialized
