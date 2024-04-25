@@ -77,9 +77,13 @@ def input_row_col() -> tuple:
 # Main program function.
 def play_tictactoe():
 
+    # Initializes times_played variable.
     times_played = 0
+
     # While loop iterates until the player does not want to play anymore.
     while True:
+        
+        # Increments each time while loop iterates.
         times_played += 1
 
         # Introduces the player and provides an example of the game input.

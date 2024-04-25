@@ -1,3 +1,19 @@
+"""
+Author: Abbie Thompson
+Date: 4/24/2024
+Assignment: RPG Project: The Game Room
+Course: CPSC1050
+
+THE GAME ROOM DESCRIPTION: The Game Room is a terminal bases RPG game that allows the user to roam the game room and play a variety of game.
+These games include Blackjack, Tic-Tac-Toe, Hangman, Magic Squares, Rock Paper Scissors, Number Guesser, and Word Jumble.
+The user must start at the Blackjack table, but they are then able to stay or jump from table to table by requesting through the Game Master.
+The number of times each game is played is recorded and saved to a json file, which is displayed once the user exit's the Game Room
+by typing "exit" instead of their next table.
+
+GitHub Link: https://github.com/Abbiet274/GameRoom
+
+"""
+# Imports functions from each game module, random module, and json module.
 
 import json
 import random
@@ -9,6 +25,7 @@ from rockpaperscissors import play_rps
 from numberguesser import play_number_guesser
 from wordjumble import play_word_jumble
 
+# Function to print out the Game Room Map.
 def print_map():
     print("""
         Game Room Map:
@@ -69,7 +86,7 @@ class Table():
     def list_exits(self):
         return '\n'.join(self.exits)
     
-    # __str__ method returns a string containg the name, rules, and exits of the table.
+    # __str__ method returns a string containg the name and rules for the game.
     def __str__(self):
         return f"{self.name} Master: Hey! You've reached the {self.name} table! Here are some rules...\n\n{self.rules}\n"
 
@@ -96,11 +113,12 @@ class GameRoomMap():
             raise ExitNotFoundError(table_name)
 
 # Defines main program function.
-def main():
+def game_room():
 
-    # Initializes AdventureMap instance.
+    # Initializes CameRoomMap instance game_room_map.
     game_room_map = GameRoomMap()
 
+    # Creates 7 Table objects for each of the games and passes the name, rules, and exits for each.
     blackjack_table = Table("Blackjack", "The goal of the game is to get a hand total as close to 21 as possible without going over. Each player receives two cards initially, and cards are valued by their face value (2-10), with face cards worth 10 and Aces worth 1 or 11. Decide whether to 'hit' (take another card) or 'stick' (keep your current hand) to reach a total close to 21. If you exceed 21, you bust. After all players finish, the players are notified who won, if anyone tied, and who busted. Have fun!", ["Tic Tac Toe"])
     ttt_table = Table("Tic Tac Toe", "The game is played on a 3x3 grid where two players take turns marking spaces with their symbol (X or O). The objective is to get three of your symbols in a row horizontally, vertically, or diagonally. Players alternate turns placing their symbol in any empty grid space. The first player to create a row of three of their symbols wins the game. If all spaces are filled without a winner, the game ends in a tie. Have fun!", ["Blackjack", "Hangman"])
     hangman_table = Table("Hangman", "The goal of the game is to guess the given word(s), whose letters are represented by underlines, before being hung. You get six guesses before you lose! If you guess correctly, the letter you guess replaces the corresponding underscore. If you guess all of the letters, you win! If not, you are hanged… Have fun!", ["Tic Tac Toe", "Rock Paper Scissors"])
@@ -118,6 +136,8 @@ def main():
     game_room_map.add_table(magic_table)
     game_room_map.add_table(wordj_table)
 
+    # Opens previously saved game data (number of times each game has been played.).
+    # If no game data exits, the times played for each game is set to zero.
     try:
         with open("timesplayed.json", "r") as file:
             times_played = json.load(file)
@@ -125,9 +145,10 @@ def main():
         print('file reset')
         times_played = {"Blackjack": 0, "Tic Tac Toe": 0, "Hangman": 0, "Rock Paper Scissors": 0, "Number Guesser": 0, "Magic Squares": 0, "Word Jumble": 0}
 
-    # Welcomes user to Game Room.
+    # Welcomes user to Game Room and informs them that they are starting at the Backjack table.
     print("\nWelcome to the Game Room! You are currently at the blackjack table. To leave the Game Room, please type 'exit,' instead of your next game.\n")
 
+    # Displays Game Room map.
     print_map()
 
     # Initializes the current table (blackjack) and gets it from the game_room_map.
@@ -135,16 +156,20 @@ def main():
 
     # Displays the details of the current table.
     print(current_table)
+
+    # increments the number of times the user plays Blackjack.
     times_played["Blackjack"] += play_blackjack()
+
+    # Displays the tables which are reachable from the Blackjack table.
     print(f"\nReachable Tables:\n{blackjack_table.list_exits()}")
 
-    # Initialies exiting bool to False.
+    # Initializes exiting bool to False.
     exiting = False
 
-    # Loops until the user wishes to exit the house.
+    # Loops until the user wishes to exit the Game Room.
     while not exiting:
 
-        # Prompts user for exit choice.
+        # The game master prompts the user for their next table choice.
         print(f"\n{current_table.get_name()} Master: What table would you like to choose next? \n(Enter 'exit' if you would like to leave.)")
 
         # Sets users exit choice to user_exit, makes lowercase and strips leading trailing whitespace.
@@ -156,12 +181,12 @@ def main():
         # If the user typed "exit," the while loop will stop, program terminates.
         if user_exit == "exit":
             
-            # Informs user that they are exiting the house.
+            # Informs user that they are exiting the Game Room.
             print(f"{current_table.get_name()} Master: All right! I will show you to the exit... thanks for playing!")
 
             # Sets exiting bool to True.
             exiting = True
-        
+
         elif user_exit.title() in exits:
 
             # If the user's choice of exit is not available for the current table, except block runs.
@@ -173,19 +198,26 @@ def main():
                 # Outputs the details of the new current table.
                 print(f"\n{current_table}")
 
+                # Game master asks the user if they would like to stay at the table they have chosen or if they would like to jump to a new one.
                 print(f"{current_table.get_name()} Master: Would you like to stay at this table? Or would you like to jump to a new table without playing?")
                 answer = input().lower().strip()
+
+                # Ensures that the user responds with either stay or jump.
                 while answer not in ['stay', 'jump']:
                     responses = ["Sorry, I'm not quite sure what you wanna do... A simple 'stay' or 'jump' will do!", "What was that? I didn't quite hear you.", "Answer with either 'stay' or 'jump!'"]
                     print(f"{current_table.get_name()} Master: {random.choice(responses)}")
                     answer = input().lower().strip()
 
+                # If the user would like to jump to a new table, the user is given the new list of reachable tables, and the while loop is continued from the top.
                 if answer == "jump":
                     print(f"\nReachable Tables:\n{current_table.list_exits()}")
                     continue
 
+                # Initializes variable times to zero.
                 times = 0
 
+                # Depending on the chosen table name, the corresponding game function is called.
+                # Each of the game functions returns the number of times they were played, therefore that number is assigned to the times variable.
                 if user_exit.title() == "Blackjack":
                     times = play_blackjack()
                 elif user_exit.title() == "Tic Tac Toe":
@@ -201,9 +233,13 @@ def main():
                 elif user_exit.title() == "Word Jumble":
                     times = play_word_jumble()
 
+                # Sets the existing number of times played for the chosen table to current_times.
                 current_times = times_played[current_table.get_name()]
+
+                # Sets the times_played for the chosen table to the current number of times plus the new number of times.
                 times_played[current_table.get_name()] = current_times + times
 
+                # Displays the new reachable tables based on the chosen table.
                 print(f"\nReachable Tables:\n{current_table.list_exits()}")
                 
             except ExitNotFoundError as e:
@@ -211,22 +247,26 @@ def main():
                 # Handles table not found error using ExitNotFoundError class.
                 print(e)
 
-        # Runs if the table is not in the house at all.
+        # Runs if the table is not in the Game Room at all.
         else:
 
             # Informs the user that the table was not found.
             print(f"{user_exit} -> Table not found")
 
+    # Writes the newly collected game data to the timesplayed.json file.
+    # Informs the user that the game session data was saved.
     with open("timesplayed.json", "w") as file:
         json.dump(times_played, file, indent=4)
         print("Game session data saved.\nBelow is the total number of times each game has been played:")
 
+    # Reads the new times_played data from the timesplayed.json file and assigns it to the all_data variable.
     with open("timesplayed.json", "r") as file:
         all_data = json.load(file) 
 
+    # Displays the newly saved times_played data.
     for name, count in all_data.items():
         print(f"   {name}: {count}")
 
 # Runs main program function.                
 if __name__ == "__main__":
-    main()
+    game_room()

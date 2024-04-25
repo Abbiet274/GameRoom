@@ -1,4 +1,3 @@
-
 import random # Loads the random module which gives access to different random number related functions.
 
 """ 
@@ -75,9 +74,15 @@ def hit(deck: list, hand: list) -> None:
 # Defines main function for the main program logic.
 
 def play_blackjack() -> None: 
+
+    # Initializes times_played variable.
     times_played = 0
+
     while True:
+
+        # Increments times_played variable each time the while loop iterates.
         times_played += 1
+
         # List of the deck of cards.
         deck = [
             "AH", "2H", "3H", "4H", "5H", "6H", "7H", "8H", "9H", "10H", "JH", "QH", "KH",

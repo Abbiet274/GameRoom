@@ -1,4 +1,3 @@
-
 import random # Imports the random module.
 
 def print_gallows(num_wrong_guesses: int) -> None:
@@ -7,7 +6,7 @@ def print_gallows(num_wrong_guesses: int) -> None:
 
     Args: man_stages: Dict with the 7 different stages of the gallows (0-6 wrong guesses)
     prints the key which corresponds to the number of wrong guesses the user has.
-    
+
     Return: None.
 
     """
@@ -122,8 +121,13 @@ categories = {
 
 # Main program function.
 def play_hangman():
+
+    # Initializes times_played variable.
     times_played = 0
+
     while True:
+
+        # Increments times_played variable each time the while loop iterates.
         times_played += 1
 
         cat = random.choice(list(categories.keys())) # Chooses a random catagory from catagories, assigned to cat.
@@ -141,7 +145,6 @@ def play_hangman():
             else:
                 displayed_word.append(' ')
 
-        
         num_wrong_guesses = 0 # Initializes num_wrong_guesses variable.
         guesses = [] # Initializes empty list guesses.
 
@@ -150,9 +153,9 @@ def play_hangman():
 
         playing = True # Initializes playing boolean to True.
 
-
         # While loop iterates until playing = False.
         while playing:
+
             print("Guess a letter: ") # User is asked to guess a letter.
             guess = input().strip().lower() # Users guess is stripped and turned all lowercase, assigned to guess variable.
 
@@ -172,6 +175,7 @@ def play_hangman():
                 print("Correct!")
                 print_gallows(num_wrong_guesses)
                 print_word(word, displayed_word, guess)
+
             # Else, the user is informed that their guess is not in the word, num_wrong_guesses incremented.
             else:
                 print(f"There are no {guess}'s")
@@ -194,6 +198,7 @@ def play_hangman():
         # If winner is true, user is informed that they won.
         if winner:
             print("You have won!")
+
         # Else: the winner is informed that they lost, they are told the word, the gallows with full man is printed, and the displayed word is printed.
         else:
             print("Gave Over, you are HANGED!")
@@ -202,13 +207,16 @@ def play_hangman():
             print_gallows(num_wrong_guesses)
             print_word(word, displayed_word, guess)
         
+        # Asks the user if they would like to play again.
         print("Would you like to play again? Enter yes or no")
         play_again = input().lower()
 
+        # Verifies user input is yes or no.
         while play_again not in ['yes', 'no']:
             print("Invalid Choice. Enter yes or no")
             play_again = input().lower()
 
+        # Ends program if user no longer wishes to play.
         if play_again == 'no':
             print("Thanks for playing!")
             break

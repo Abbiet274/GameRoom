@@ -1,8 +1,13 @@
-
 def play_magic_squares():
+
+    # Initializes times_played variable.
     times_played = 0
+
     while True:
+
+        # Increments times_played variable each time the while loop iterates.
         times_played += 1
+
         print('Enter in the magic square size you would like:')
         size = int(input()) #Turns users number to an integer and stores it in variable size.
 
@@ -35,6 +40,7 @@ def play_magic_squares():
         input_square = [['*' for i in range(size)] for j in range(size)] #Initializes 2D list for user's square.
 
         print('Your square:')
+
         """
         Nested for loop increments index variable and replaces each element in input_square with new_str_vals[index]. 
         Prints list at index i joined at the end of each iteration to display the user's square.
@@ -133,13 +139,16 @@ def play_magic_squares():
         else:
             print('This is not a magic square!')
         
+        # Prompts the user if they would like to play again.
         print("Would you like to play again? Enter yes or no")
         play_again = input().lower()
 
+        # Verifies the user's answer is yes or no.
         while play_again not in ['yes', 'no']:
             print("Invalid Choice. Enter yes or no")
             play_again = input().lower()
 
+        # Ends the game if they do not wish to play anymore.
         if play_again == 'no':
             print("Thanks for playing!")
             break
